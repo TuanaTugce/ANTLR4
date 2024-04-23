@@ -1,0 +1,52 @@
+grammar g;
+
+BEGIN : 'begin';
+END : 'end';
+INT : 'int';
+FLOAT : 'float';
+CHAR : 'char';
+FOR : 'for';
+DO : 'do';
+ENDDO : 'end do';
+PLUS : '+';
+MINUS : '-';
+MULT : '*';
+DIV : '/';
+AND : '&';
+OR : '||' ;
+SEM : ';';
+COLON : ':';
+COMMENT : '//' ~[\r\n]* -> skip;
+
+ID : [a-zA-Z][a-zA-Z0-9]*;
+
+INT_VAL : [0-9]+;
+FLOAT_VAL : [0-9]+ '.' [0-9]+;
+CHAR_VAL : '\'' . '\'';
+
+WS : [\t\r\n]+ -> skip;
+
+program : BEGIN dec* stat* END;
+
+dec : INT COLON ID SEM | FLOAT COLON ID SEM | CHAR COLON ID SEM ;
+
+stat: assign | do_loop;
+
+assign : ID '=' exp SEM;
+
+exp : exp (MULT | DIV ) exp
+    | exp (PLUS | MINUS) exp
+    | INT_VAL
+    |FLOAT_VAL
+    |ID
+    |CHAR_VAL;
+
+do_loop : DO loop_control stat+ ENDDO;
+
+loop_control : ID '=' start = exp ',' end = exp (',' step = exp)? ;
+
+
+
+
+
+//prog : 'begin' (dec | expr) 'end';
