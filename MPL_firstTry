@@ -1,0 +1,28 @@
+grammar g;
+
+BEGIN : 'begin';
+END : 'end';
+INT : 'int';
+FLOAT : 'float';
+CHAR : 'char';
+FOR : 'for';
+CHAR : 'a'.. 'z' | 'A'..'Z';
+ INT : ('0'..'9')+;
+ FLOAT :INT '.' INT;
+ ID : CHAR+ (CHAR|INT)*;
+ OP1 : '*' | '/';
+ OP2 : '+' | '-';
+
+ dec :  (('int' ': ' ID (' = ' INT)? ) | ('float' ': ' ID (' = ' FLOAT)?)
+  | ('char' ': ' ID (' = ' '"'CHAR '"')?)) ';'
+  ;
+
+exp :  exp OP2 term | term | ;
+
+term : term OP1 factor | factor | '('exp')' ;
+
+factor : ID | INT | FLOAT;
+
+prog : 'begin ' (dec| (ID ' = ' exp))
+' end' ';' ;
+
