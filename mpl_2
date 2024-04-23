@@ -34,12 +34,22 @@ stat: assign | do_loop;
 
 assign : ID '=' exp SEM;
 
-exp : exp (MULT | DIV ) exp
-    | exp (PLUS | MINUS) exp
-    | INT_VAL
-    |FLOAT_VAL
-    |ID
-    |CHAR_VAL;
+exp : arithmetic_exp | logical_exp;
+
+arithmetic_exp : arithmetic_exp (MULT | DIV ) arithmetic_exp
+               | arithmetic_exp (PLUS | MINUS) arithmetic_exp
+               | INT_VAL
+               |FLOAT_VAL
+               |ID
+               |CHAR_VAL;
+
+logical_exp : logical_exp AND logical_exp
+            | logical_exp OR logical_exp
+            | '(' logical_exp ')'
+            |ID
+            |INT_VAL
+            |FLOAT_VAL
+            |CHAR_VAL;
 
 do_loop : DO loop_control stat+ ENDDO;
 
