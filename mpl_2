@@ -1,4 +1,4 @@
-grammar g;
+grammar mpl;
 
 BEGIN : 'begin';
 END : 'end';
