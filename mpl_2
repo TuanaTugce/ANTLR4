@@ -41,7 +41,7 @@ arithmetic_exp : arithmetic_exp (MULT | DIV ) arithmetic_exp
                | INT_VAL
                |FLOAT_VAL
                |ID
-               |CHAR_VAL;
+               |'('arithmetic_exp')';
 
 logical_exp : logical_exp AND logical_exp
             | logical_exp OR logical_exp
@@ -49,11 +49,13 @@ logical_exp : logical_exp AND logical_exp
             |ID
             |INT_VAL
             |FLOAT_VAL
-            |CHAR_VAL;
+            |CHAR_VAL
+            |'('logical_exp')';
 
 do_loop : DO loop_control stat+ ENDDO;
 
 loop_control : ID '=' start = exp ',' end = exp (',' step = exp)? ;
+
 
 
 
